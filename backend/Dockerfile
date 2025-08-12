@@ -3,8 +3,8 @@ FROM gradle:8-jdk17-alpine AS build
 WORKDIR /workspace
 # Copy backend project
 COPY . .
-# Build the bootable jar (frontend is built via Gradle task wiring)
-RUN gradle clean bootJar -x test --no-daemon
+# Build the bootable jar without tests, skipping frontend (frontend hosted on Netlify)
+RUN gradle clean bootJar -x test --no-daemon -PskipFrontend=true
 
 # ====== Runtime stage ======
 FROM eclipse-temurin:17-jre-alpine

@@ -25,24 +25,31 @@ test {
 }
 
 /** —— Frontend build & copy —— **/
-node {
-    // your frontend is a sibling of backend at repo root
-    nodeProjectDir = file("${projectDir}/../frontend")
-    download = true
-}
+// Allow skipping frontend when building Docker image from backend-only context
+ext.skipFrontend = (project.findProperty('skipFrontend') == 'true')
 
-tasks.register('buildFrontend', com.github.gradle.node.npm.task.NpmTask) {
-    dependsOn 'npmInstall'          // ✅ correct task name
-    args = ['run', 'build']
-}
+if (!skipFrontend) {
+    node {
+        // your frontend is a sibling of backend at repo root
+        nodeProjectDir = file("${projectDir}/../frontend")
+        download = true
+    }
 
-tasks.register('copyFrontend', Copy) {
-    dependsOn 'buildFrontend'
-    from("${node.nodeProjectDir}/dist")
-    into("${projectDir}/src/main/resources/static")
-}
+    tasks.register('buildFrontend', com.github.gradle.node.npm.task.NpmTask) {
+        dependsOn 'npmInstall'          // ✅ correct task name
+        args = ['run', 'build']
+    }
 
-/* Ensure frontend is included in the bootable jar */
-tasks.named('bootJar') {
-    dependsOn 'copyFrontend'
+    tasks.register('copyFrontend', Copy) {
+        dependsOn 'buildFrontend'
+        from("${node.nodeProjectDir}/dist")
+        into("${projectDir}/src/main/resources/static")
+    }
+
+    /* Ensure frontend is included in the bootable jar */
+    tasks.named('bootJar') {
+        dependsOn 'copyFrontend'
+    }
+} else {
+    logger.lifecycle("Skipping frontend build (skipFrontend=true)")
 }
