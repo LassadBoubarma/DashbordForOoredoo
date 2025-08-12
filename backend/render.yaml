@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: ooredoo-backend
+    runtime: docker
+    rootDir: dashboard/backend
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: JAVA_TOOL_OPTIONS
+        value: -Xmx512m
+      - key: app.cors.allowed-origins
+        value: "*"
