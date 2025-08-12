@@ -1,9 +1,11 @@
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+
 export async function uploadFile(file) {
     const formData = new FormData();
     formData.append('file', file);
 
     try {
-        const response = await fetch('http://localhost:8080/api/upload', {
+        const response = await fetch(`${API_BASE}/api/upload`, {
             method: 'POST',
             body: formData,
         });

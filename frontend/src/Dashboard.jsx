@@ -7,6 +7,9 @@ import { exportToPDF } from './services/exportService';
 import DropdownFilter from './DropdownFilter'; // en haut de ton fichier
 
 function Dashboard() {
+    // ✅ API base configurable via Vite
+    const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+
     // ✅ Persisted states in localStorage
     const [uploadId, setUploadId] = usePersistentState('uploadId', null);
     const [filters, setFilters] = usePersistentState('filters', {});
@@ -37,6 +40,7 @@ function Dashboard() {
                     setSelectedFileName(file.name);
                 }
             } catch (error) {
+                console.error('Upload error:', error);
                 alert(`Erreur lors de l'import du fichier : ${file.name}`);
             }
         }
@@ -79,7 +83,7 @@ function Dashboard() {
 
         const fetchFilters = async () => {
             try {
-                const res = await fetch(`http://localhost:8080/api/filters/all?uploadId=${uploadId}`);
+                const res = await fetch(`${API_BASE}/api/filters/all?uploadId=${uploadId}`);
                 const json = await res.json();
                 if (json && typeof json === 'object') {
                     setAllOptions(json);
@@ -115,7 +119,7 @@ function Dashboard() {
                     values.forEach(val => queryParams.append(key, val));
                 });
 
-                const res = await fetch(`http://localhost:8080/api/data?${queryParams}`);
+                const res = await fetch(`${API_BASE}/api/data?${queryParams}`);
                 const json = await res.json();
 
                 if (json && Array.isArray(json.rows)) {
