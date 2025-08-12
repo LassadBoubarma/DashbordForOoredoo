@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '3.1.0'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'java'
+    id "com.github.node-gradle.node" version "7.0.2"
 }
 
 group = 'com.stageooredoo'
@@ -13,8 +14,35 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.apache.poi:poi-ooxml:5.2.3'
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+/** —— Frontend build & copy —— **/
+node {
+    // your frontend is a sibling of backend at repo root
+    nodeProjectDir = file("${projectDir}/../frontend")
+    download = true
+}
+
+tasks.register('buildFrontend', com.github.gradle.node.npm.task.NpmTask) {
+    dependsOn 'npmInstall'          // ✅ correct task name
+    args = ['run', 'build']
+}
+
+tasks.register('copyFrontend', Copy) {
+    dependsOn 'buildFrontend'
+    from("${node.nodeProjectDir}/dist")
+    into("${projectDir}/src/main/resources/static")
+}
+
+/* Ensure frontend is included in the bootable jar */
+tasks.named('bootJar') {
+    dependsOn 'copyFrontend'
 }
