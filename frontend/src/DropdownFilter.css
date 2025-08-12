@@ -1,0 +1,114 @@
+.dropdown-filter {
+    position: relative;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    background-color: #e60000;
+    color: white;
+    padding: 8px 18px 8px 14px;
+    border: none;
+    border-radius: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: background 0.2s, box-shadow 0.2s;
+    font-size: 15px;
+}
+
+.dropdown-toggle:hover,
+.dropdown-toggle:focus {
+    background-color: #c40000;
+    box-shadow: 0 4px 12px rgba(230, 0, 0, 0.15);
+}
+
+.clear-x {
+    margin-left: 6px;
+    color: #fff;
+    background: #c40000;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s;
+}
+
+.clear-x:hover {
+    background: #a80000;
+}
+
+.dropdown-arrow {
+    margin-left: 4px;
+    transition: transform 0.2s;
+}
+
+.dropdown-arrow.open {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    background-color: red !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 9999 !important;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: max-content;
+    min-width: 160px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 4px 0;
+    color: #fff !important;
+    /* texte blanc par défaut dans le menu */
+}
+
+.dropdown-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: #fff !important;
+    font-size: 15px;
+    border-radius: 6px;
+}
+
+/* Survol: léger voile clair transparent, texte reste blanc */
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: #fff !important;
+}
+
+/* Élément sélectionné: fond blanc + texte rouge lisible, ne change pas au survol */
+.dropdown-item.selected {
+    background-color: #fff !important;
+    color: #e60000 !important;
+    font-weight: 700;
+}
+
+.dropdown-item.selected:hover,
+.dropdown-item.selected:focus {
+    background-color: #fff !important;
+    color: #e60000 !important;
+}
+
+.selected-values {
+    font-weight: normal;
+    font-size: 0.9em;
+    color: white;
+    margin-left: 0.5rem;
+}

@@ -1,0 +1,40 @@
+.table-container {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 450px;
+    background: #fff;
+    padding: 8px;
+    position: relative;
+    border: 1px solid #ddd;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.custom-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    /* Plain white header */
+    font-weight: bold;
+    text-align: left;
+    padding: 10px;
+    border-bottom: 2px solid #ccc;
+    z-index: 5;
+}
+
+.custom-table td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+.no-data {
+    text-align: center;
+    padding: 15px;
+    font-size: 14px;
+    color: #777;
+}
